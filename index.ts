@@ -5,9 +5,9 @@ import React from 'react';
 // Нужно заменить OrderStateResultType на тип который вычисляется на освове OrderState
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-type initialOrderStates =  "initial"| "inWork"| "buyingSupplies"| "producing"| "fullfilled";
-const orderStates:Readonly<initialOrderStates[]> = ["initial", "inWork", "buyingSupplies", "producing", "fullfilled"] as const;
-type OrderStateResultType = Exclude<initialOrderStates, "buyingSupplies" | "producing">[]
+type InitialOrderStates =  "initial"| "inWork"| "buyingSupplies"| "producing"| "fullfilled";
+const orderStates:Readonly<InitialOrderStates[]> = ["initial", "inWork", "buyingSupplies", "producing", "fullfilled"] as const;
+type OrderStateResultType = Exclude<InitialOrderStates, "buyingSupplies" | "producing">[]
 type OrderState = typeof orderStates[number];
 const getUserOrderStates = (orderStates: OrderState[]): OrderStateResultType => {
     const filteredStates:OrderStateResultType = [];
@@ -75,7 +75,7 @@ const omit = <T extends Record<any, any>, K extends keyof T>(
 // Нужно заменить FilterOnlyInitialAndInWorkOrderType на правильный тип вычисленный на основе Order
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type InitialAndInWorkOrderType = "initial" | "inWork";
-type FilterOnlyInitialAndInWorkOrderType = Record<'state', InitialAndInWorkOrderType> | null;
+type FilterOnlyInitialAndInWorkOrderType = Extract<SpecialOrder, { 'state': InitialAndInWorkOrderType}> | null;
 type SpecialOrder =
     | {
     state: "initial";
@@ -128,8 +128,8 @@ const getDefaultProps = <T>(
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type initialOrderStatesList =  "initial"| "inWork"| "buyingSupplies"| "producing"| "fullfilled";
-type UserOrderStatesType = Omit<initialOrderStatesList, "buyingSupplies" | "producing">[];
+type InitialOrderStatesList =  "initial"| "inWork"| "buyingSupplies"| "producing"| "fullfilled";
+type UserOrderStatesType = Omit<InitialOrderStatesList, "buyingSupplies" | "producing">[];
 const orderStatesList = [
     "initial",
     "inWork",

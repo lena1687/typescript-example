@@ -8,8 +8,7 @@ import React from 'react';
 type InitialOrderStates =  "initial"| "inWork"| "buyingSupplies"| "producing"| "fullfilled";
 const orderStates:Readonly<InitialOrderStates[]> = ["initial", "inWork", "buyingSupplies", "producing", "fullfilled"] as const;
 type OrderStateResultType = Exclude<InitialOrderStates, "buyingSupplies" | "producing">[]
-type OrderState = typeof orderStates[number];
-const getUserOrderStates = (orderStates: OrderState[]): OrderStateResultType => {
+const getUserOrderStates = (orderStates: InitialOrderStates[]): OrderStateResultType => {
     const filteredStates:OrderStateResultType = [];
     orderStates.forEach((element) => {
         if (element !== "buyingSupplies" && element !== "producing") {
